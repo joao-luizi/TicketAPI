@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/Presentation/">
+    <Project Path="Presentation/Ticketing.Api.csproj" />
+  </Folder>
+</Solution>
