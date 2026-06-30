@@ -1,4 +1,6 @@
 using Ticketing.Api.DependencyInjection;
+using Ticketing.Application.DependencyInjection;
+using Ticketing.Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 //builder.Services.AddOpenApi();
 builder.Services.AddApi();
+builder.Services.AddApplication();
+builder.Services.AddInfra();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
