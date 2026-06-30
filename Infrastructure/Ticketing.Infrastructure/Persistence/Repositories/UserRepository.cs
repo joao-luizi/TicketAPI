@@ -13,6 +13,12 @@ namespace Ticketing.Infrastructure.Persistence.Repositories
 
         public async Task<User?> GetUserByEmail(string email, CancellationToken token)
         {
+            users.Add(new User
+            {
+                Id = ++currentId,
+                UserName = "testuser",
+                Email = "joao.luizi@gmail.com",
+            });
             return users.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
         }
 
