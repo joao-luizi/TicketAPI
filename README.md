@@ -27,6 +27,36 @@ http://localhost:3000/health
 > The application runs in Development mode inside the container
 > to allow Swagger usage during the learning phase.
 
+
+## Run the project
+
+```bash
+podman compose up --build
+```
+
+
+## PostgreSQL
+
+You can connect using any database client (e.g. DBeaver):
+
+- Host: localhost
+- Port: 5432
+- User: postgres
+- Password: secret
+- Database: ticketing
+
+
+> Note:
+> The API is not yet connected to PostgreSQL.
+> This step only introduces the containerized database and orchestration setup.
+
+
+## Stop
+
+```bash
+podman compose down
+```
+
 ---
 
 ## Estrutura atual
