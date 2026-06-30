@@ -1,6 +1,12 @@
 <Solution>
+  <Folder Name="/Application/">
+    <Project Path="Application/Ticketing.Application/Ticketing.Application.csproj" Id="cd1d79d4-049f-4363-84df-25d467cf768e" />
+  </Folder>
   <Folder Name="/Domain/">
     <Project Path="Domain/Ticketing.Domain/Ticketing.Domain.csproj" Id="409da231-5fcc-4bdb-9a1a-2dff2a9cfa4d" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="Infrastructure/Ticketing.Infrastructure/Ticketing.Infrastructure.csproj" Id="a336445c-ff21-44e7-bb12-dc11d0165ef3" />
   </Folder>
   <Folder Name="/Presentation/">
     <Project Path="Presentation/Ticketing.Api.csproj" />
