@@ -8,7 +8,7 @@ namespace Ticketing.Application.UseCases.CreateTicket
 {
     public  class CreateTicketUseCase(
         ITicketRepository ticketRepository,
-        IUserRepository userRepository)
+        IUserRepository userRepository) : ICreateTicketUseCase
     {
 
         public async Task<CreateTicketOutput> CreateTicketAsync(CreateTicketInput input, 
