@@ -30,12 +30,12 @@ namespace Ticketing.Api.Controllers
 
                 var output = await createTicketUseCase.CreateTicketAsync(input, cancellationToken);
                 
-                return new CreateTicketResponse
+                return Ok(new CreateTicketResponse
                 {
                     Success = output.Success,
                     TicketId = output.TicketId,
                     Detail = output.Detail
-                };
+                });
             }
             catch(Exception ex)
             {
