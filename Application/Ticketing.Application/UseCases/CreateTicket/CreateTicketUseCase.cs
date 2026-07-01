@@ -41,7 +41,7 @@ namespace Ticketing.Application.UseCases.CreateTicket
                 };
             }
 
-            var hasDuplicateTicket = await ticketRepository.HasDuplicateTicketAsync(user.Id, input.Title, cancelationToken);
+            var hasDuplicateTicket = await ticketRepository.HasDuplicateTicketAsync(user.UserName, input.Title, cancelationToken);
             if (hasDuplicateTicket == true)
             {
                 return new CreateTicketOutput

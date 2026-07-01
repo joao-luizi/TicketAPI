@@ -10,7 +10,7 @@ namespace Ticketing.Application.Abstractions.Persistence
          Task<Ticket> CreateTicketAsync(Ticket ticket, CancellationToken cancellationToken);
 
 
-        Task<bool> HasDuplicateTicketAsync(int userId, string title, CancellationToken cancellationToken);
+        Task<bool> HasDuplicateTicketAsync(string username, string title, CancellationToken cancellationToken);
        
     }
 }
