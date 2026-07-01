@@ -1,6 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Ticketing.Api.DependencyInjection;
 using Ticketing.Application.DependencyInjection;
 using Ticketing.Infrastructure.DependencyInjection;
+using Ticketing.Infrastructure.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,12 +16,19 @@ builder.Services.AddInfra(builder.Configuration);
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<TicketingDbContext>();
+    db.Database.Migrate();
+}
+
 // Configure the HTTP request pipeline.
 // Swagger enabled in all environments because this is an API-only service
 //if (app.Environment.IsDevelopment())
 //{
-    //app.MapOpenApi();
-    app.UseSwagger();
+//app.MapOpenApi();
+app.UseSwagger();
     app.UseSwaggerUI();
 //}
 
