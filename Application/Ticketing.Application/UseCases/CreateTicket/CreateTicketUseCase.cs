@@ -24,14 +24,6 @@ namespace Ticketing.Application.UseCases.CreateTicket
                 };
             }
 
-            if (user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTime.UtcNow)
-            {
-                return new CreateTicketOutput
-                {
-                    Success = false,
-                    Detail = "User is locked out"
-                };
-            }
             if (user.IsActive == false)
             {
                 return new CreateTicketOutput
