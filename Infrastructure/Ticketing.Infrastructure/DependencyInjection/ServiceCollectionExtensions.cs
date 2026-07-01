@@ -2,8 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ticketing.Application.Abstractions.Persistence;
+using Ticketing.Application.Abstractions.Security;
 using Ticketing.Infrastructure.Persistence.Context;
 using Ticketing.Infrastructure.Persistence.Repositories;
+using Ticketing.Infrastructure.Services.Security;
 
 namespace Ticketing.Infrastructure.DependencyInjection
 {
@@ -19,6 +21,7 @@ namespace Ticketing.Infrastructure.DependencyInjection
                 options.UseNpgsql(connectionString));
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
             return services;
         }
     }
