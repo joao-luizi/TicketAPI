@@ -15,12 +15,13 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// Swagger enabled in all environments because this is an API-only service
+//if (app.Environment.IsDevelopment())
+//{
     //app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.MapControllers();
 
