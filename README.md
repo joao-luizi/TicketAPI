@@ -78,7 +78,7 @@ O projeto usa Code First + Migrations.
 
 ### Criar uma migration:
 ```bash
-dotnet ef migrations add <MigrationName> --project Infrastructure/Ticketing.Infrastructure --startup-project Presentation/Ticketing.Api --context TicketingDbContext
+dotnet ef migrations add <MigrationName> --project .\Infrastructure\Ticketing.Infrastructure\Ticketing.Infrastructure.csproj  --startup-project .\Presentation\Ticketing.Api.csproj --context TicketingDbContext
 ```
 
 ### Aplicar migrations manualmente
