@@ -1,43 +1,69 @@
 # Ticketing API
 
 ## Description
-API simples para gestão de tickets, construída com ASP.NET.
 
-Este projeto faz parte de um onboarding challenge e será desenvolvido de forma incremental, adicionando funcionalidades como validação, persistência, autenticação e testes.
+API para gestão de tickets construída com ASP.NET Core, seguindo uma arquitetura em camadas e práticas modernas de desenvolvimento.
 
+Este projeto faz parte de um onboarding challenge e está a ser desenvolvido de forma incremental, evoluindo por etapas:
+
+- Containerização (API + PostgreSQL)
+- Integração com base de dados (EF Core)
+- Migrations (Code First)
+- Validação
+- Autenticação
+- Testes
+---
+## Current Features
+
+✅ API containerizada com Podman/Docker  
+✅ PostgreSQL configurado em container  
+✅ EF Core (Code First) integrado  
+✅ Migrations implementadas  
+✅ Base de dados criada automaticamente via migrations  
+✅ Health check endpoint  
+✅ Swagger disponível  
+
+---
 
 ## Requirements
 
-- Podman or Docker installed
+- .NET SDK (10.0 ou compatível com o projeto)
+- Podman ou Docker
+- CLI do EF Core (`dotnet ef`)
 
-## Build API Container
+---
 
-podman pod create --name api-pod -p 3000:3000
+## Project Structure
 
-podman run -d --pod api-pod --name api ticketing-api
+/Presentation
+└── Ticketing.Api           # Startup project (Web API)
+/Application
+└── Ticketing.Application   # Application layer (services, logic)
+/Domain
+└── Ticketing.Domain        # Domain models
+/Infrastructure
+└── Ticketing.Infrastructure # EF Core, DbContext, repositories, migrations
 
-## Test
+---
 
-Open:
+## Running the Project
 
-http://localhost:3000/health
-
-
-> Note:
-> The application runs in Development mode inside the container
-> to allow Swagger usage during the learning phase.
-
-
-## Run the project
+### Start everything (API + PostgreSQL)
 
 ```bash
 podman compose up --build
 ```
 
+--build é necessário só quando há alterações no código da API
 
-## PostgreSQL
+```bash
+podman compose down
+```
 
-You can connect using any database client (e.g. DBeaver):
+# Database
+A base de dados PostgreSQL corre num container e usa um volume persistente.
+
+Connection details:
 
 - Host: localhost
 - Port: 5432
@@ -45,39 +71,86 @@ You can connect using any database client (e.g. DBeaver):
 - Password: secret
 - Database: ticketing
 
+--- 
 
-> Note:
-> The API is not yet connected to PostgreSQL.
-> This step only introduces the containerized database and orchestration setup.
+## Migrations (EF Core)
+O projeto usa Code First + Migrations.
 
+### Criar uma migration:
+```bash
+dotnet ef migrations add <MigrationName> --project Infrastructure/Ticketing.Infrastructure --startup-project Presentation/Ticketing.Api --context TicketingDbContext
+```
 
-## Stop
+### Aplicar migrations manualmente
+```bash
+
+dotnet ef database update --project Infrastructure/Ticketing.Infrastructure --startup-project Presentation/Ticketing.Api --context TicketingDbContext
+
+```
+
+### Aplicação automática no arranque
+
+A API aplica automaticamente migrations no startup:
 
 ```bash
-podman compose down
+db.Database.Migrate();
+
 ```
+
+Isto garante:
+
+- criação da base de dados
+- aplicação de migrations pendentes
+- comportamento idempotente
 
 ---
 
-## Estrutura atual
+# Development vs Container Environment
 
-/Presentation  
-  └── Ticketing.Api → Projeto Web API (startup)
-/Domain 
-  └── Ticketing.Domain
-/Application 
-  └── Ticketing.Application 
-/Infrastructure 
-  └── Ticketing.Infrastructure 
+O projeto usa diferentes connection strings dependendo do ambiente:
+## Tables
+
+| Contexto | Host DB |
+|----------|--------|
+| Local (dotnet run / migrations) | localhost |
+| Container (API → DB) | db |
 
 ---
 
-## Como executar
+# Accessing the API
+## Health Check
 
+http://localhost:3000/health
+
+## Swagger
+
+http://localhost:3000/swagger
+
+Swagger está ativo em todos os ambientes por ser uma API-only (uso controlado esperado).
+
+## How Containers Work
+
+- Containers são recriados a cada compose up
+- A imagem só é rebuildada com --build
+- A base de dados persiste via volume
+
+# Sem rebuild:
 ```bash
-dotnet run --project Presentation/Ticketing.Api
+podman compose up
 ```
 
+# Com rebuild:
+
+```bash
+podman compose up --build
+```
+
+# Reset Environment
+Para apagar totalmente a base de dados:
+```bash
+podman compose -down -v
+```
+Remove volumes → DB será recriada do zero
 
 
 
