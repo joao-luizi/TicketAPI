@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 //builder.Services.AddOpenApi();
 builder.Services.AddApi();
 builder.Services.AddApplication();
-builder.Services.AddInfra();
+builder.Services.AddInfra(builder.Configuration);
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
