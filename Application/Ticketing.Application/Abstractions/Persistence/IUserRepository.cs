@@ -7,10 +7,12 @@ namespace Ticketing.Application.Abstractions.Persistence
 {
     public  interface IUserRepository
     {
-        Task<User?> GetUserById(int id, CancellationToken token);
-        Task<User?> GetUserByEmail(string email, CancellationToken token);
+        Task<User?> GetUserById(int id, CancellationToken cancellationToken);
+        Task<User?> GetUserByEmail(string email, CancellationToken cancellationToken);
 
-        Task<User?> GetUserByUserName(string username, CancellationToken token);
+        Task<User?> GetUserByUserName(string username, CancellationToken cancellationToken);
+
+        Task<User> CreateUserAsync(User user, CancellationToken cancellationToken);
 
     }
 }

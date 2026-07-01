@@ -1,36 +1,38 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Ticketing.Application.Abstractions.Persistence;
 using Ticketing.Domain.Models;
+using Ticketing.Infrastructure.Persistence.Context;
 
 namespace Ticketing.Infrastructure.Persistence.Repositories
 {
-    internal class UserRepository : IUserRepository
+    internal class UserRepository (TicketingDbContext context): IUserRepository
     {
-        private List<User> users = new List<User>();
-        int currentId = 0;
 
-        public async Task<User?> GetUserByEmail(string email, CancellationToken token)
+        public async Task<User> CreateUserAsync(User user, CancellationToken cancellationToken)
         {
-            users.Add(new User
-            {
-                Id = ++currentId,
-                UserName = "testuser",
-                Email = "joao.luizi@gmail.com",
-            });
-            return users.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
-        }
 
-        public async Task<User?> GetUserById(int id, CancellationToken token)
-        {
-            return users.FirstOrDefault(u => u.Id == id);
+            await context.Users.AddAsync(user, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
+            return user;
 
         }
-
-        public async Task<User?> GetUserByUserName(string username, CancellationToken token)
+        public async Task<User?> GetUserByEmail(string email, CancellationToken cancellationToken)
         {
-            return users.FirstOrDefault(u => u.UserName.Equals(username, StringComparison.OrdinalIgnoreCase));
+           return await context.Users.FirstOrDefaultAsync(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase), cancellationToken);
+        }
+
+        public async Task<User?> GetUserById(int id, CancellationToken cancellationToken)
+        {
+            return await context.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+
+        }
+
+        public async Task<User?> GetUserByUserName(string username, CancellationToken cancellationToken)
+        {
+            return await context.Users.FirstOrDefaultAsync(u => u.UserName.Equals(username, StringComparison.OrdinalIgnoreCase), cancellationToken);
         }
     }
 }
