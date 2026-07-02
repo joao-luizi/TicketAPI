@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ticketing.Application.UseCases.CreateUser
+namespace Ticketing.Application.UseCases.User.CreateUser
 {
     public  class CreateUserOutput
     {

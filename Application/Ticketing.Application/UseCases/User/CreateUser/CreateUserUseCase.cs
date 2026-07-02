@@ -1,9 +1,8 @@
-﻿
-using Ticketing.Application.Abstractions.Persistence;
+﻿using Ticketing.Application.Abstractions.Persistence;
 using Ticketing.Application.Abstractions.Security;
 using Ticketing.Domain.Models;
 
-namespace Ticketing.Application.UseCases.CreateUser
+namespace Ticketing.Application.UseCases.User.CreateUser
 {
     public  class CreateUserUseCase(IUserRepository userRepository,
         IPasswordHasher passwordHasher) : ICreateUserUseCase

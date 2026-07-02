@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Ticketing.Application.Abstractions.Security;
-using Ticketing.Application.UseCases.CreateTicket;
-using Ticketing.Application.UseCases.CreateUser;
+using Ticketing.Application.UseCases.Ticket.CreateTicket;
+using Ticketing.Application.UseCases.User.CreateUser;
 
 
 namespace Ticketing.Application.DependencyInjection

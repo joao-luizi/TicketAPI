@@ -4,14 +4,14 @@ using System.Text;
 using Ticketing.Application.Abstractions.Persistence;
 using Ticketing.Domain.Models;
 
-namespace Ticketing.Application.UseCases.CreateTicket
+namespace Ticketing.Application.UseCases.Ticket.CreateTicket
 {
     public  class CreateTicketUseCase(
         ITicketRepository ticketRepository,
         IUserRepository userRepository) : ICreateTicketUseCase
     {
 
-        public async Task<CreateTicketOutput> CreateTicketAsync(CreateTicketInput input, 
+        public async Task<CreateTicketOutput> Execute(CreateTicketInput input, 
             CancellationToken cancelationToken)
         {
             var user = await userRepository.GetUserByEmail(input.UserEmail, cancelationToken);
