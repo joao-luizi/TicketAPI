@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Ticketing.Api.Contracts.Request;
 using Ticketing.Api.Contracts.Response;
-using Ticketing.Application.UseCases.CreateTicket;
+using Ticketing.Application.UseCases.Ticket.CreateTicket;
 
 namespace Ticketing.Api.Controllers
 {
@@ -11,7 +11,7 @@ namespace Ticketing.Api.Controllers
     [Tags("Tickets")]
     public class TicketController(ICreateTicketUseCase createTicketUseCase) : ControllerBase
     {
-        [HttpPost("create")]
+        [HttpPost]
         [ProducesResponseType(typeof(CreateTicketResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -28,7 +28,7 @@ namespace Ticketing.Api.Controllers
                     UserEmail = request.UserEmail
                 };
 
-                var output = await createTicketUseCase.CreateTicketAsync(input, cancellationToken);
+                var output = await createTicketUseCase.Execute(input, cancellationToken);
                 
                 return Ok(new CreateTicketResponse
                 {
@@ -42,5 +42,9 @@ namespace Ticketing.Api.Controllers
                 return Problem(title: "Failed to process Create Ticket request", detail: ex.Message);
             }
         }
+        
+
+        
+
     }
 }

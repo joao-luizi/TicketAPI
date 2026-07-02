@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Ticketing.Api.Contracts.Request;
 using Ticketing.Api.Contracts.Response;
-using Ticketing.Application.UseCases.CreateTicket;
-using Ticketing.Application.UseCases.CreateUser;
+using Ticketing.Application.UseCases.User.CreateUser;
 
 namespace Ticketing.Api.Controllers
 {
@@ -29,7 +27,7 @@ namespace Ticketing.Api.Controllers
                    Password = request.password
                 };
 
-                var output = await createUserUseCase.CreateUserAsync(input, cancellationToken);
+                var output = await createUserUseCase.Execute(input, cancellationToken);
 
                 return new CreateUserResponse
                 {
