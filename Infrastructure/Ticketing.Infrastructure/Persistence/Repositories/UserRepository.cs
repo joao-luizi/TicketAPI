@@ -5,7 +5,7 @@ using Ticketing.Infrastructure.Persistence.Context;
 
 namespace Ticketing.Infrastructure.Persistence.Repositories
 {
-    internal class UserRepository (TicketingDbContext context): IUserRepository
+    public class UserRepository (TicketingDbContext context): IUserRepository
     {
 
         public async Task<User> CreateUserAsync(User user, CancellationToken cancellationToken)
