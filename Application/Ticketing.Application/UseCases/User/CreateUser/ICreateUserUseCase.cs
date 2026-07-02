@@ -6,6 +6,6 @@ namespace Ticketing.Application.UseCases.User.CreateUser
 {
     public interface ICreateUserUseCase
     {
-        Task<CreateUserOutput> CreateUserAsync(CreateUserInput input, CancellationToken cancellationToken);
+        Task<CreateUserOutput> Execute(CreateUserInput input, CancellationToken cancellationToken);
     }
 }

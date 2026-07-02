@@ -1,13 +1,12 @@
 ﻿using Ticketing.Application.Abstractions.Persistence;
 using Ticketing.Application.Abstractions.Security;
-using Ticketing.Domain.Models;
 
 namespace Ticketing.Application.UseCases.User.CreateUser
 {
     public  class CreateUserUseCase(IUserRepository userRepository,
         IPasswordHasher passwordHasher) : ICreateUserUseCase
     {
-        public async Task<CreateUserOutput> CreateUserAsync(CreateUserInput input, CancellationToken cancellationToken)
+        public async Task<CreateUserOutput> Execute(CreateUserInput input, CancellationToken cancellationToken)
         {
             var existingEmailUser = await userRepository.GetUserByEmail(input.Email, cancellationToken);
             var existingUsernameUser = await userRepository.GetUserByUserName(input.UserName, cancellationToken);
@@ -28,7 +27,7 @@ namespace Ticketing.Application.UseCases.User.CreateUser
                 };
             }
 
-            var newUser = await userRepository.CreateUserAsync(new User
+            var newUser = await userRepository.CreateUserAsync(new Domain.Models.User
             {
                 UserName = input.UserName,
                 PasswordHash = passwordHasher.Hash(input.Password),

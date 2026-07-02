@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Ticketing.Application.Abstractions.Persistence;
+﻿using Ticketing.Application.Abstractions.Persistence;
 using Ticketing.Domain.Models;
 
 namespace Ticketing.Application.UseCases.Ticket.CreateTicket
@@ -43,7 +40,7 @@ namespace Ticketing.Application.UseCases.Ticket.CreateTicket
                 };
             }
 
-            var newTicket = await ticketRepository.CreateTicketAsync(new Ticket
+            var newTicket = await ticketRepository.CreateTicketAsync(new Domain.Models.Ticket
             {
                 Title = input.Title,
                 Description = input.Description,
