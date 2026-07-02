@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Ticketing.Api.DependencyInjection;
+using Ticketing.Application.Abstractions.Persistence;
 using Ticketing.Application.DependencyInjection;
 using Ticketing.Infrastructure.DependencyInjection;
 using Ticketing.Infrastructure.Persistence.Context;
@@ -20,7 +21,12 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<TicketingDbContext>();
-    db.Database.Migrate();
+    await db.Database.MigrateAsync();
+
+    var seeder = scope.ServiceProvider.GetRequiredService<IDbSeeder>();
+
+    await seeder.SeedAsync();
+
 }
 
 // Configure the HTTP request pipeline.
@@ -29,7 +35,7 @@ using (var scope = app.Services.CreateScope())
 //{
 //app.MapOpenApi();
 app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwaggerUI();
 //}
 
 app.MapControllers();

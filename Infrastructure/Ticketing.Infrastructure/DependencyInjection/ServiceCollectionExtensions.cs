@@ -18,10 +18,16 @@ namespace Ticketing.Infrastructure.DependencyInjection
             ?? throw new InvalidOperationException("Connection string 'TicketingDB' was not found.");
 
             services.AddDbContext<TicketingDbContext>(options =>
-                options.UseNpgsql(connectionString));
+                options.UseNpgsql(connectionString, 
+                npgsqlOptions => 
+                npgsqlOptions.EnableRetryOnFailure(maxRetryCount: 10, 
+                maxRetryDelay: TimeSpan.FromSeconds(30), 
+                errorCodesToAdd: null)));
+
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
+            services.AddScoped<IDbSeeder, DbSeeder>();
             return services;
         }
     }
