@@ -10,7 +10,7 @@ namespace Ticketing.Api.Controllers
     [Tags("Users")]
     public class UserController(ICreateUserUseCase createUserUseCase) : ControllerBase
     {
-        [HttpPost("create")]
+        [HttpPost]
         [ProducesResponseType(typeof(CreateUserResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
