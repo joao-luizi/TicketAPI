@@ -21,6 +21,7 @@ namespace Ticketing.Infrastructure.Persistence.Context
             context.Users.Add(new User
             {
                 UserName = "admin",
+                Email = "admin@admin.com",
                 PasswordHash = passwordHasher.Hash("!#123Admin"),
                 UserRoles = UserRoles.Admin
             });
