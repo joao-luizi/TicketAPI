@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Ticketing.Api.Contracts.Request;
 using Ticketing.Api.Contracts.Response;
 using Ticketing.Application.UseCases.User.CreateUser;
@@ -11,8 +12,11 @@ namespace Ticketing.Api.Controllers
     public class UserController(ICreateUserUseCase createUserUseCase) : ControllerBase
     {
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(CreateUserResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<CreateUserResponse>> Process(
         [FromBody] CreateUserRequest request,
