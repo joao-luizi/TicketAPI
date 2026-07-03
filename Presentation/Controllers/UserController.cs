@@ -9,7 +9,8 @@ namespace Ticketing.Api.Controllers
     [ApiController]
     [Route("users")]
     [Tags("Users")]
-    public class UserController(ICreateUserUseCase createUserUseCase) : ControllerBase
+    public class UserController(ICreateUserUseCase createUserUseCase,
+        ILogger<UserController> logger) : ControllerBase
     {
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -42,6 +43,7 @@ namespace Ticketing.Api.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, "Failed to process Create Ticket request");
                 return Problem(title: "Failed to process Create User request", detail: ex.Message);
             }
         }
