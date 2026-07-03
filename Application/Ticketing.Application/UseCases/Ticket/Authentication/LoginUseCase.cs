@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Ticketing.Application.Abstractions.Persistence;
+﻿using Ticketing.Application.Abstractions.Persistence;
 using Ticketing.Application.Abstractions.Security;
+using Microsoft.Extensions.Logging;
 
 namespace Ticketing.Application.UseCases.Ticket.Authentication
 {
     public class LoginUseCase(IUserRepository userRepository,
         IPasswordHasher passwordHasher,
-        ITokenService tokenService) : ILoginUseCase
+        ITokenService tokenService,
+        ILogger<LoginUseCase> logger) : ILoginUseCase
     {
         public async Task<LoginOutput> Execute(LoginInput input, CancellationToken cancelationToken)
         {
             var user = await userRepository.GetUserByUserName(input.UserName, cancelationToken);
             if (user == null)
             {
+                logger.LogInformation("Login failed for user {UserName}: User not found", input.UserName);
                 return new LoginOutput()
                 {
                     Success = false,
@@ -25,6 +25,7 @@ namespace Ticketing.Application.UseCases.Ticket.Authentication
             if (passwordHasher.Verify(input.Password, user.PasswordHash))
             {
                 var token = tokenService.GenerateAccessToken(user);
+                logger.LogInformation("User {UserName} logged in successfully", input.UserName);
                 return new LoginOutput()
                 {
                     Success = true,
@@ -40,8 +41,6 @@ namespace Ticketing.Application.UseCases.Ticket.Authentication
                     Detail = "Invalid password",
                 };
             }
-
-
         }
     }
 }
