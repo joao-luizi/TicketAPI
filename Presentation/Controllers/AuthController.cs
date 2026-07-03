@@ -13,6 +13,7 @@ namespace Ticketing.Api.Controllers
     {
         [HttpPost("login")]
         [ProducesResponseType(typeof(LoginUserResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(LoginUserResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<LoginUserResponse>> Login(
@@ -28,13 +29,19 @@ namespace Ticketing.Api.Controllers
                 };
 
                 var output = await loginUseCase.Execute(input, cancellationToken);
-
-                return Ok(new LoginUserResponse()
+                var response = new LoginUserResponse()
                 {
                     Success = output.Success,
                     Token = output.Token,
                     Detail = output.Detail
-                });
+                };
+
+                if (output.Success == false)
+                {
+                    return Unauthorized(response);
+                }
+
+                return Ok(response);
             }
             catch(Exception ex)
             {
