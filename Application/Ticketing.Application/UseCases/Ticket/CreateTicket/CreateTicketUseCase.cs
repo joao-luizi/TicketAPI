@@ -1,12 +1,13 @@
-﻿using Ticketing.Application.Abstractions.Persistence;
+﻿using Microsoft.Extensions.Logging;
+using Ticketing.Application.Abstractions.Persistence;
 using Ticketing.Domain.Enums;
-using Ticketing.Domain.Models;
 
 namespace Ticketing.Application.UseCases.Ticket.CreateTicket
 {
     public  class CreateTicketUseCase(
         ITicketRepository ticketRepository,
-        IUserRepository userRepository) : ICreateTicketUseCase
+        IUserRepository userRepository,
+        ILogger<CreateTicketUseCase> logger) : ICreateTicketUseCase
     {
 
         public async Task<CreateTicketOutput> Execute(CreateTicketInput input, 
@@ -53,6 +54,7 @@ namespace Ticketing.Application.UseCases.Ticket.CreateTicket
                 CreatedAt = DateTime.UtcNow
             }, cancelationToken);
 
+            logger.LogInformation("Ticket created successfully with ID: {TicketId}", newTicket.Id);
             return new CreateTicketOutput
             {
                 Success = true,
