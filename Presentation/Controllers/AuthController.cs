@@ -9,7 +9,8 @@ namespace Ticketing.Api.Controllers
 {
     [ApiController]
     [Route("auth")]
-    public class AuthController(ILoginUseCase loginUseCase) : ControllerBase
+    public class AuthController(ILoginUseCase loginUseCase,
+        ILogger<AuthController> logger) : ControllerBase
     {
         [HttpPost("login")]
         [ProducesResponseType(typeof(LoginUserResponse), StatusCodes.Status200OK)]
@@ -45,6 +46,7 @@ namespace Ticketing.Api.Controllers
             }
             catch(Exception ex)
             {
+                logger.LogError(ex, "Failed to process user login for {UserName}", request.UserName);
                 return Problem(title: $"Failed to process user login for {request.UserName}", detail: ex.Message);
             }
         }
