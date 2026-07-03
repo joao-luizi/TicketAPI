@@ -1,10 +1,12 @@
-﻿using Ticketing.Application.Abstractions.Persistence;
+﻿using Microsoft.Extensions.Logging;
+using Ticketing.Application.Abstractions.Persistence;
 using Ticketing.Application.Abstractions.Security;
 
 namespace Ticketing.Application.UseCases.User.CreateUser
 {
     public  class CreateUserUseCase(IUserRepository userRepository,
-        IPasswordHasher passwordHasher) : ICreateUserUseCase
+        IPasswordHasher passwordHasher,
+        ILogger<CreateUserUseCase> logger) : ICreateUserUseCase
     {
         public async Task<CreateUserOutput> Execute(CreateUserInput input, CancellationToken cancellationToken)
         {
@@ -12,6 +14,7 @@ namespace Ticketing.Application.UseCases.User.CreateUser
             var existingUsernameUser = await userRepository.GetUserByUserName(input.UserName, cancellationToken);
             if (existingEmailUser != null)
             {
+                logger.LogWarning("Attempt to create user with existing email: {Email}", input.Email);
                 return new CreateUserOutput
                 {
                     Success = false,
@@ -20,6 +23,7 @@ namespace Ticketing.Application.UseCases.User.CreateUser
             }
             if (existingUsernameUser != null)
             {
+                logger.LogWarning("Attempt to create user with existing username: {UserName}", input.UserName);
                 return new CreateUserOutput
                 {
                     Success = false,
@@ -35,7 +39,7 @@ namespace Ticketing.Application.UseCases.User.CreateUser
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             }, cancellationToken);
-
+            logger.LogInformation("User created successfully with ID: {UserId}", newUser.Id);
             return new CreateUserOutput
             {
                 Success = true,
