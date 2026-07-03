@@ -1,4 +1,5 @@
 ﻿using Ticketing.Application.Abstractions.Persistence;
+using Ticketing.Domain.Enums;
 using Ticketing.Domain.Models;
 
 namespace Ticketing.Application.UseCases.Ticket.CreateTicket
@@ -17,16 +18,18 @@ namespace Ticketing.Application.UseCases.Ticket.CreateTicket
                 return new CreateTicketOutput
                 {
                     Success = false,
-                    Detail = "User not found"
+                    Detail = "User not found",
+                    FailureType = CreateTicketFailureType.UserNotFound
                 };
             }
 
-            if (user.IsActive == false)
+            if (!user.IsActive)
             {
                 return new CreateTicketOutput
                 {
                     Success = false,
-                    Detail = "User is not active"
+                    Detail = "User is not active",
+                    FailureType = CreateTicketFailureType.UserInactive
                 };
             }
 
@@ -36,7 +39,8 @@ namespace Ticketing.Application.UseCases.Ticket.CreateTicket
                 return new CreateTicketOutput
                 {
                     Success = false,
-                    Detail = "Duplicate ticket title for the user"
+                    Detail = "Duplicate ticket title for the user",
+                    FailureType = CreateTicketFailureType.DuplicateTicket
                 };
             }
 
