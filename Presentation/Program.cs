@@ -1,11 +1,21 @@
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Ticketing.Api.DependencyInjection;
 using Ticketing.Application.Abstractions.Persistence;
 using Ticketing.Application.DependencyInjection;
 using Ticketing.Infrastructure.DependencyInjection;
 using Ticketing.Infrastructure.Persistence.Context;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, services, configuration) =>
+{
+    configuration
+        .ReadFrom.Configuration(context.Configuration);
+});
+
 
 builder.Services.AddControllers();
 //builder.Services.AddOpenApi();
@@ -16,7 +26,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-
+app.UseSerilogRequestLogging();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<TicketingDbContext>();
