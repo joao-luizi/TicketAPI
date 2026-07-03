@@ -10,7 +10,8 @@ namespace Ticketing.Api.Controllers
     [ApiController]
     [Route("tickets")]
     [Tags("Tickets")]
-    public class TicketController(ICreateTicketUseCase createTicketUseCase) : ControllerBase
+    public class TicketController(ICreateTicketUseCase createTicketUseCase,
+        ILogger<TicketController> logger) : ControllerBase
     {
         [HttpPost]
         [ProducesResponseType(typeof(CreateTicketResponse), StatusCodes.Status201Created)]
@@ -23,6 +24,7 @@ namespace Ticketing.Api.Controllers
         {
             try
             {
+                throw new NotImplementedException();
                 var input = new CreateTicketInput()
                 {
                     Title = request.Title,
@@ -51,6 +53,7 @@ namespace Ticketing.Api.Controllers
             }
             catch(Exception ex)
             {
+                logger.LogError(ex, "Failed to process Create Ticket request");
                 return Problem(title: "Failed to process Create Ticket request", detail: ex.Message);
             }
         }
