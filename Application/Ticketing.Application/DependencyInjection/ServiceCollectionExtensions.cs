@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Ticketing.Application.Abstractions.Security;
+using Ticketing.Application.UseCases.Ticket.Authentication;
 using Ticketing.Application.UseCases.Ticket.CreateTicket;
 using Ticketing.Application.UseCases.User.CreateUser;
 
@@ -11,7 +13,8 @@ namespace Ticketing.Application.DependencyInjection
         {
             services.AddScoped<ICreateTicketUseCase, CreateTicketUseCase>();
             services.AddScoped<ICreateUserUseCase, CreateUserUseCase>();
-            
+            services.AddScoped<ILoginUseCase, LoginUseCase>();
+          
             return services;
         }
     }
