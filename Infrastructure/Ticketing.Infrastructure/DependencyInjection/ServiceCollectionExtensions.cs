@@ -24,10 +24,14 @@ namespace Ticketing.Infrastructure.DependencyInjection
                 maxRetryDelay: TimeSpan.FromSeconds(30), 
                 errorCodesToAdd: null)));
 
+            services.Configure<JwtOptions>(
+                configuration.GetSection("Jwt"));
+
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
             services.AddScoped<IDbSeeder, DbSeeder>();
+            services.AddScoped<ITokenService, JwtTokenService>();
             return services;
         }
     }
