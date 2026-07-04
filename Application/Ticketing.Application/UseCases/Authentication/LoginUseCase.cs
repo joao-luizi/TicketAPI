@@ -2,7 +2,7 @@
 using Ticketing.Application.Abstractions.Security;
 using Microsoft.Extensions.Logging;
 
-namespace Ticketing.Application.UseCases.Ticket.Authentication
+namespace Ticketing.Application.UseCases.Authentication
 {
     public class LoginUseCase(IUserRepository userRepository,
         IPasswordHasher passwordHasher,

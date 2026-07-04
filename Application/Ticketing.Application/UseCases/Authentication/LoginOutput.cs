@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ticketing.Application.UseCases.Ticket.Authentication
+namespace Ticketing.Application.UseCases.Authentication
 {
     public  class LoginOutput
     {
