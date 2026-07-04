@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Ticketing.Api.Contracts.Request;
 using Ticketing.Api.Contracts.Response;
-using Ticketing.Application.UseCases.Ticket.Authentication;
+using Ticketing.Application.UseCases.Authentication;
+
 
 
 namespace Ticketing.Api.Controllers
