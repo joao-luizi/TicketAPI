@@ -48,7 +48,7 @@ namespace Ticketing.Api.Controllers
                     };
                 }
 
-                return Ok(response);
+                return Created();
             }
             catch(Exception ex)
             {
