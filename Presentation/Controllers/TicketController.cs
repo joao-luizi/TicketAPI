@@ -24,7 +24,6 @@ namespace Ticketing.Api.Controllers
         {
             try
             {
-                throw new NotImplementedException();
                 var input = new CreateTicketInput()
                 {
                     Title = request.Title,
