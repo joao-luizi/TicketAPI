@@ -34,12 +34,18 @@ namespace Ticketing.Api.Controllers
 
                 var output = await createUserUseCase.Execute(input, cancellationToken);
 
-                return new CreateUserResponse
+                var response = new CreateUserResponse()
                 {
                     Success = output.Success,
                     UserId = output.UserId,
                     Detail = output.Detail
                 };
+                if (!output.Success)
+                {
+                    return BadRequest(response);
+                }
+
+                return Created();
             }
             catch (Exception ex)
             {

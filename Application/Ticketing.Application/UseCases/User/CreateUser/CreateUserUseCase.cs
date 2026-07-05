@@ -39,7 +39,9 @@ namespace Ticketing.Application.UseCases.User.CreateUser
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             }, cancellationToken);
+
             logger.LogInformation("User created successfully with ID: {UserId}", newUser.Id);
+
             return new CreateUserOutput
             {
                 Success = true,
