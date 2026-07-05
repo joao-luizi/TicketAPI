@@ -10,6 +10,7 @@ using Ticketing.Api.Controllers;
 using Ticketing.Api.DependencyInjection;
 using Ticketing.Application.DependencyInjection;
 using Ticketing.Application.UseCases.Authentication;
+using Ticketing.Application.UseCases.Ticket.CreateTicket;
 using Ticketing.Infrastructure.DependencyInjection;
 
 namespace Ticketing.Api.Tests.Controllers
