@@ -13,6 +13,7 @@
   </Folder>
   <Folder Name="/UnitTests/">
     <Project Path="Ticketing.Application.Tests/Ticketing.Application.Tests.csproj" Id="fbf2677a-c06d-48d4-8a87-b32674cb1a59" />
+    <Project Path="Ticketing.Infrastructure.Tests/Ticketing.Infrastructure.Tests.csproj" Id="befbde53-1a18-4fa7-a70e-5caa1dc57c07" />
     <Project Path="UnitTests/Ticketing.Api.Tests/Ticketing.Api.Tests.csproj" Id="6f194e28-1a19-4547-b52d-1e474bd58d7e" />
     <Project Path="UnitTests/Ticketing.Domain.Tests/Ticketing.Domain.Tests.csproj" Id="0d2fe71e-02ef-41b5-9ca4-e0705948f852" />
   </Folder>
