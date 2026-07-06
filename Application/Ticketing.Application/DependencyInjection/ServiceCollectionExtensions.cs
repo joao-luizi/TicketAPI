@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Ticketing.Application.Abstractions.Security;
 using Ticketing.Application.UseCases.Authentication;
 using Ticketing.Application.UseCases.Ticket.CreateTicket;
 using Ticketing.Application.UseCases.User.CreateUser;
